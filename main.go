@@ -11,11 +11,11 @@ import (
 )
 
 // Bot parameters TEMPLATE
-var (
-	GuildID_template        = flag.String("guild", "<GUILD_ID>", "Test guild ID. If not passed - bot registers commands globally")
-	BotToken_template       = flag.String("token", "<ACESS_TOKEN>", "Bot access token")
-	RemoveCommands_template = flag.Bool("rmcmd", true, "Remove all commands after shutdowning or not")
-)
+/*var (
+	GuildID        = flag.String("guild", "<GUILD_ID>", "Test guild ID. If not passed - bot registers commands globally")
+	BotToken       = flag.String("token", "<ACESS_TOKEN>", "Bot access token")
+	RemoveCommands = flag.Bool("rmcmd", true, "Remove all commands after shutdowning or not")
+)*/
 
 /* === Global variables === */
 var s *discordgo.Session
