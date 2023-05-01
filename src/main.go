@@ -21,7 +21,7 @@ import (
 var s *discordgo.Session
 
 var cfg = weaviate.Config{
-	Host:   "localhost:8080",
+	Host:   "weaviate:8080",
 	Scheme: "http",
 }
 

@@ -2,8 +2,8 @@ package main
 
 import (
 	"encoding/json"
-	"fmt"
 	"io/ioutil"
+	"log"
 	"os"
 )
 
@@ -58,7 +58,7 @@ func saveMissingXkcd() error {
 			if i == 404 {
 				continue
 			}
-			fmt.Printf("\rWIP : %d/%d", i, lastPublished.Num)
+			log.Printf("\rWIP : %d/%d", i, lastPublished.Num)
 			//get the XKCD
 			xkcd, err := fetchtXKCD(int64(i))
 			if err != nil {
