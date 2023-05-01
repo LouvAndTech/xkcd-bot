@@ -10,11 +10,11 @@ import (
 	"github.com/weaviate/weaviate-go-client/v4/weaviate"
 )
 
-// Bot parameters
+// Bot parameters TEMPLATE
 var (
-	GuildID        = flag.String("guild", "978305922638151740", "Test guild ID. If not passed - bot registers commands globally")
-	BotToken       = flag.String("token", "MTEwMjE5ODQxNTQzOTQyOTY5Mw.GeTtfb.oGuZCT8MM8XU0Im8y3BWvwd-qxplv9puv-wALo", "Bot access token")
-	RemoveCommands = flag.Bool("rmcmd", true, "Remove all commands after shutdowning or not")
+	GuildID_template        = flag.String("guild", "<GUILD_ID>", "Test guild ID. If not passed - bot registers commands globally")
+	BotToken_template       = flag.String("token", "<ACESS_TOKEN>", "Bot access token")
+	RemoveCommands_template = flag.Bool("rmcmd", true, "Remove all commands after shutdowning or not")
 )
 
 /* === Global variables === */
