@@ -21,7 +21,9 @@ import (
 var s *discordgo.Session
 
 var cfg = weaviate.Config{
-	Host:   "weaviate:8080",
+	// Dv:
+	Host: "localhost:8080",
+	//Host:   "weaviate:8080",
 	Scheme: "http",
 }
 
@@ -94,15 +96,6 @@ func main() {
 
 	if *RemoveCommands {
 		log.Println("Removing commands...")
-		// // We need to fetch the commands, since deleting requires the command ID.
-		// // We are doing this from the returned commands on line 375, because using
-		// // this will delete all the commands, which might not be desirable, so we
-		// // are deleting only the commands that we added.
-		// registeredCommands, err := s.ApplicationCommands(s.State.User.ID, *GuildID)
-		// if err != nil {
-		// 	log.Fatalf("Could not fetch registered commands: %v", err)
-		// }
-
 		for _, v := range registeredCommands {
 			err := s.ApplicationCommandDelete(s.State.User.ID, *GuildID, v.ID)
 			if err != nil {
