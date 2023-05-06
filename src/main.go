@@ -12,12 +12,12 @@ import (
 	"github.com/weaviate/weaviate-go-client/v4/weaviate"
 )
 
-// Bot parameters TEMPLATE
-/*var (
-	GuildID        = flag.String("guild", "<GUILD_ID>", "Test guild ID. If not passed - bot registers commands globally")
-	BotToken       = flag.String("token", "<ACESS_TOKEN>", "Bot access token")
+// Bot parameters
+var (
+	BotToken       *string
+	GuildID        = flag.String("guild", "", "Test guild ID. If not passed - bot registers commands globally")
 	RemoveCommands = flag.Bool("rmcmd", true, "Remove all commands after shutdowning or not")
-)*/
+)
 
 /* === Global variables === */
 var s *discordgo.Session
@@ -52,22 +52,37 @@ func saveMissing() {
 func init() { flag.Parse() }
 
 func init() {
+	log.Println("Starting...")
+	//Get the bot token from the environment variables
+	if os.Getenv("TOKEN") == "" {
+		log.Fatalf("You need to pass the bot token as an argument")
+	}
+	log.Println("Bot token:", os.Getenv("TOKEN"))
+	BotToken = flag.String("token", os.Getenv("TOKEN"), "Bot access token")
+
+	// Initialize the bot
 	log.Println("Initializing bot...")
 	var err error
 	s, err = discordgo.New("Bot " + *BotToken)
 	if err != nil {
 		log.Fatalf("Invalid bot parameters: %v", err)
 	}
+
+	// Initialize the storage for persistent data
 	log.Println("Initializing storage...")
 	err = InitStrorage()
 	if err != nil {
 		log.Fatalf("Cannot initialize storage: %v", err)
 	}
+
+	// Initialize the database
 	log.Println("Initializing database...")
 	err = InitDB(cfg)
 	if err != nil {
 		log.Fatalf("Cannot initialize database: %v", err)
 	}
+
+	// Initialize the scheduler and add the job
 	cron = gocron.NewScheduler(time.UTC)
 	cron.Every(1).Day().At("00:00").Do(saveMissing)
 }
@@ -92,23 +107,6 @@ func main() {
 	}
 
 	defer s.Close()
-
-	/* Debug */
-	// Add the 1000 xkcd to the database
-	/*lastXKCD, err := fetchLastXKCD()
-	if err != nil {
-		log.Fatalf("Cannot get last XKCD: %v", err)
-	}
-	err = AddNewXKCDEntry(GetClient(cfg), lastXKCD)
-	if err != nil {
-		log.Fatalf("Cannot add XKCD: %v", err)
-	}*/
-	//Get the XKCD close to the number 1000
-	/*xkcd, err := SearchXKCD(GetClient(cfg), "Overlapping")
-	if err != nil {
-		log.Fatalf("Cannot get XKCD: %v", err)
-	}
-	log.Printf("XKCD: %v", xkcd)*/
 
 	stop := make(chan os.Signal, 1)
 	signal.Notify(stop, os.Interrupt)

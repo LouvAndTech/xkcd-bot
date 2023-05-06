@@ -9,8 +9,8 @@ services:
     - --scheme
     - http
     image: semitechnologies/weaviate:1.18.4
-    #ports:
-    #- 8080:8080
+    #ports: # uncomment if you want to access the weaviate db from outside the docker-stack network
+    #- 8080:8080 
     restart: on-failure:0
     environment:
       TRANSFORMERS_INFERENCE_API: 'http://t2v-transformers:8080'
@@ -23,10 +23,12 @@ services:
   t2v-transformers:
     image: semitechnologies/transformers-inference:sentence-transformers-multi-qa-MiniLM-L6-cos-v1
     environment:
-      ENABLE_CUDA: '0'
+      ENABLE_CUDA: '0' # set to 1 if you have a GPU
   xlcd-bot:
     image: louvandtech/xkcd-bot:latest
     container_name: xkcd-bot
     restart: unless-stopped
     volumes:
-      - "/volume2/docker/xkcd-bot:/data"
+      - "<YOUR_PATH>:/data" # for persistent storage of the json file
+    environment:
+      TOKEN: <YOUR_DISCORD_BOT_TOKEN> # get it from https://discord.com/developers/applications

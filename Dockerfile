@@ -8,9 +8,9 @@ COPY ./src/go.mod ./
 COPY ./src/go.sum ./
 # Install dependencies
 RUN go mod download
-#Copy the backend code
+#Copy the code
 COPY ./src/*.go ./
-# Build the backend
+# Build
 RUN CGO_ENABLED=0 go build -o ./bot-exe
 
 
@@ -20,8 +20,10 @@ FROM gcr.io/distroless/base-debian10
 #create a directory for the app
 WORKDIR /
 
-# Copy the backend binary
+ENV TOKEN=""
+
+# Copy the binary
 COPY --from=build /bot-exe ./
 
-# Execute the backend
-CMD [ "./bot-exe" ]
+# Execute the bot
+CMD [ "./bot-exe"]
