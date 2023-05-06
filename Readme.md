@@ -37,6 +37,7 @@ No real answer, just think we all could use a lilte bit more of xkcd in our bori
 ### Developer side :
 
 *i won't explain how to do it but feel free to use or modify my code if you want*
+##### *(You can use the [json file in the repo](https://raw.githubusercontent.com/LouvAndTech/xkcd-bot/main/src/data/xkcd.json) to fill your own weaviate instance to avoid having to download the ~2500 first)*
 - #### Download the source code and run it yourself :
     *You need to know what you're doing in go and a bit of docker*
 - #### **(WIP)**  ~~Download the docker image and run it :~~
@@ -44,5 +45,3 @@ No real answer, just think we all could use a lilte bit more of xkcd in our bori
 
 ---
 ## Limit :
-- All new meme are not added to the db after first launch of the container
-(plain to use gocron to do that)
