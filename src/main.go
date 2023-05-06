@@ -36,6 +36,7 @@ func saveMissing() {
 			log.Println("panic occurred:", err)
 		}
 	}()
+	log.Println(">>> Saving missing XKCD for the day...")
 	err := SaveMissingXkcd()
 	if err != nil {
 		panic(err)
@@ -44,6 +45,7 @@ func saveMissing() {
 	if err != nil {
 		panic(err)
 	}
+	log.Println(">>> Done!")
 }
 
 // init is called before main
