@@ -40,8 +40,10 @@ No real answer, just think we all could use a lilte bit more of xkcd in our bori
 ##### *(You can use the [json file in the repo](https://raw.githubusercontent.com/LouvAndTech/xkcd-bot/main/src/data/xkcd.json) to fill your own weaviate instance to avoid having to download the ~2500 first)*
 - #### Download the source code and run it yourself :
     *You need to know what you're doing in go and a bit of docker*
-- #### **(WIP)**  ~~Download the docker image and run it :~~
-    *It's not possible for now because the bot token need to be hardcoded* [ ~~Docker hub link~~](https://hub.docker.com/repository/docker/louvandtech/xkcd-bot)
+- #### Use the docker image to run it :
+    *You can use the [docker-compose file in the repo](https://github.com/LouvAndTech/xkcd-bot/blob/main/utils/docker-compose.yml) to deploy it.*
+    - [Docker hub link](https://hub.docker.com/repository/docker/louvandtech/xkcd-bot)
 
 ---
-## Limit :
+## Limits / Bugs :
+*I've resolved all the limitation and bugs i've found, but if you find one feel free to open an issue*
