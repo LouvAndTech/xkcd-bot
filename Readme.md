@@ -44,6 +44,5 @@ No real answer, just think we all could use a lilte bit more of xkcd in our bori
 
 ---
 ## Limit :
-- For now it's only running on a private server but i plain to push it on a public one
 - All new meme are not added to the db after first launch of the container
 (plain to use gocron to do that)
