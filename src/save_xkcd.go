@@ -7,16 +7,32 @@ import (
 	"os"
 )
 
+var (
+	folder = "data"
+	file   = "xkcd.json"
+	path   = folder + "/" + file
+)
+
 func InitStrorage() error {
-	//check if the file exists
-	if _, err := os.Stat("xkcd.json"); os.IsNotExist(err) {
+	//check if the data folder exists
+	if _, err := os.Stat(folder); os.IsNotExist(err) {
 		//if it doesn't exist, create it
-		_, err := os.Create("xkcd.json")
+		log.Println("Creating data folder")
+		err := os.Mkdir("data", 0755)
+		if err != nil {
+			return err
+		}
+	}
+	//check if the file exists
+	if _, err := os.Stat(path); os.IsNotExist(err) {
+		//if it doesn't exist, create it
+		log.Println("Creating xkcd.json")
+		_, err := os.Create(path)
 		if err != nil {
 			return err
 		}
 		//then write an empty array
-		err = ioutil.WriteFile("xkcd.json", []byte("[]"), 0644)
+		err = ioutil.WriteFile(path, []byte("[]"), 0644)
 		if err != nil {
 			return err
 		}
@@ -36,7 +52,7 @@ func SaveMissingXkcd() error {
 		return err
 	}
 	//Get the data from the JSON
-	file, err := ioutil.ReadFile("xkcd.json")
+	file, err := ioutil.ReadFile(path)
 	if err != nil {
 		return err
 	}
@@ -78,7 +94,7 @@ func SaveMissingXkcd() error {
 
 func saveXKCD(new XKCD_Short) error {
 	//Get the data from the JSON
-	file, err := ioutil.ReadFile("xkcd.json")
+	file, err := ioutil.ReadFile(path)
 	if err != nil {
 		return err
 	}
@@ -97,7 +113,7 @@ func saveXKCD(new XKCD_Short) error {
 	if err != nil {
 		return err
 	}
-	err = ioutil.WriteFile("xkcd.json", file, 0644)
+	err = ioutil.WriteFile(path, file, 0644)
 	if err != nil {
 		return err
 	}
@@ -106,7 +122,7 @@ func saveXKCD(new XKCD_Short) error {
 
 func GetAllXKCD() ([]XKCD_Short, error) {
 	//Get the data from the JSON
-	file, err := ioutil.ReadFile("xkcd.json")
+	file, err := ioutil.ReadFile(path)
 	if err != nil {
 		return nil, err
 	}

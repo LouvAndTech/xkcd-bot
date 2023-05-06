@@ -24,9 +24,9 @@ var s *discordgo.Session
 var cron *gocron.Scheduler
 
 var cfg = weaviate.Config{
-	// Dv:
-	Host: "localhost:8080",
-	//Host:   "weaviate:8080",
+	// DEV CONFIG:
+	//Host: "localhost:8080",
+	Host:   "weaviate:8080",
 	Scheme: "http",
 }
 

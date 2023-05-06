@@ -1,7 +1,6 @@
 version: '3.4'
 services:
   weaviate:
-    container_name: weaviate
     command:
     - --host
     - 0.0.0.0
@@ -10,8 +9,8 @@ services:
     - --scheme
     - http
     image: semitechnologies/weaviate:1.18.4
-    ports:
-    - 8080:8080
+    #ports:
+    #- 8080:8080
     restart: on-failure:0
     environment:
       TRANSFORMERS_INFERENCE_API: 'http://t2v-transformers:8080'
@@ -29,3 +28,5 @@ services:
     image: louvandtech/xkcd-bot:latest
     container_name: xkcd-bot
     restart: unless-stopped
+    volumes:
+      - "/volume2/docker/xkcd-bot:/data"
