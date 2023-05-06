@@ -5,8 +5,10 @@ import (
 	"log"
 	"os"
 	"os/signal"
+	"time"
 
 	"github.com/bwmarrin/discordgo"
+	"github.com/go-co-op/gocron"
 	"github.com/weaviate/weaviate-go-client/v4/weaviate"
 )
 
@@ -19,6 +21,7 @@ import (
 
 /* === Global variables === */
 var s *discordgo.Session
+var cron *gocron.Scheduler
 
 var cfg = weaviate.Config{
 	// Dv:
@@ -27,7 +30,21 @@ var cfg = weaviate.Config{
 	Scheme: "http",
 }
 
-//var cstParis, _ = time.LoadLocation("Europe/Paris")
+func saveMissing() {
+	defer func() {
+		if err := recover(); err != nil {
+			log.Println("panic occurred:", err)
+		}
+	}()
+	err := SaveMissingXkcd()
+	if err != nil {
+		panic(err)
+	}
+	err = UpdateDB(GetClient(cfg))
+	if err != nil {
+		panic(err)
+	}
+}
 
 // init is called before main
 func init() { flag.Parse() }
@@ -49,6 +66,8 @@ func init() {
 	if err != nil {
 		log.Fatalf("Cannot initialize database: %v", err)
 	}
+	cron = gocron.NewScheduler(time.UTC)
+	cron.Every(1).Day().At("00:00").Do(saveMissing)
 }
 
 func main() {

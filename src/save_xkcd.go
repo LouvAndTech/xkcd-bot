@@ -22,14 +22,14 @@ func InitStrorage() error {
 		}
 	}
 	/* -- Then retrieve all the XKCDs -- */
-	err := saveMissingXkcd()
+	err := SaveMissingXkcd()
 	if err != nil {
 		return err
 	}
 	return nil
 }
 
-func saveMissingXkcd() error {
+func SaveMissingXkcd() error {
 	//get the last XKCD
 	lastPublished, err := fetchLastXKCD()
 	if err != nil {

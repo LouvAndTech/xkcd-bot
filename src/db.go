@@ -6,6 +6,7 @@ import (
 	"log"
 
 	"github.com/weaviate/weaviate-go-client/v4/weaviate"
+	"github.com/weaviate/weaviate-go-client/v4/weaviate/filters"
 	"github.com/weaviate/weaviate-go-client/v4/weaviate/graphql"
 	"github.com/weaviate/weaviate/entities/models"
 )
@@ -38,20 +39,39 @@ func InitDB(cfg weaviate.Config) error {
 		if err != nil {
 			return fmt.Errorf("cannot create schema: %v", err)
 		}
+	}
+	err := UpdateDB(client)
+	if err != nil {
+		return fmt.Errorf("cannot update DB: %v", err)
+	}
+	return nil
+}
 
-		// Add the XKCD entries
-		all, err := GetAllXKCD()
+func UpdateDB(client *weaviate.Client) error {
+	// Add the XKCD entries
+	all, err := GetAllXKCD()
+	if err != nil {
+		return fmt.Errorf("cannot get all XKCD: %v", err)
+	}
+	for _, entry := range all {
+		// If the XKCD entry already exists, skip it
+		num := graphql.Field{Name: "num"}
+		where_filter := filters.WhereBuilder{}
+		where_filter.WithOperator("Equal").WithPath([]string{"num"}).WithValueInt(int64(entry.Num))
+		res, err := client.GraphQL().Get().
+			WithClassName("XKCD").
+			WithFields(num).
+			WithWhere(&where_filter).
+			Do(context.Background())
+		if err != nil || len(res.Data["Get"].(map[string]interface{})["XKCD"].([]interface{})) > 0 {
+			continue
+		}
+		log.Printf("Adding XKCD entry %d", entry.Num)
+		err = AddNewXKCDEntry(client, entry)
 		if err != nil {
-			return fmt.Errorf("cannot get all XKCD: %v", err)
+			log.Printf("cannot add XKCD entry: %v", err)
+			continue
 		}
-		for _, entry := range all {
-			err = AddNewXKCDEntry(client, entry)
-			if err != nil {
-				log.Printf("cannot add XKCD entry: %v", err)
-				continue
-			}
-		}
-
 	}
 	return nil
 }
