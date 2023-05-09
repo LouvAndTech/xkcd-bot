@@ -17,7 +17,7 @@ Under the hood it's using a `Golang` program and using [`discordgo`](https://git
 
 To get the data i'm using [xkcd api](https://xkcd.com/json.html).
 
-And to allow a search within all the meme i'm using [`weaviate`](https://weaviate.io) a vectorial databse wich is filled with all the description and title.
+And to allow a search within all the meme i'm using [`weaviate`](https://weaviate.io) a vectorial database which is filled with all the description and title.
 
 All of this hosted on my `Docker Instance`.
 
