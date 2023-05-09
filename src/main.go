@@ -82,12 +82,17 @@ func init() {
 		log.Fatalf("Cannot initialize database: %v", err)
 	}
 
-	// Initialize the scheduler and add the job
+	// Initialize the scheduler, add the job and start it
 	cron = gocron.NewScheduler(time.UTC)
-	cron.Every(1).Day().At("00:00").Do(saveMissing)
+	_, err = cron.Every(1).Day().At("00:00").Do(saveMissing)
+	if err != nil {
+		log.Fatal("Cannot add the job to the scheduler: ", err)
+	}
+	cron.StartAsync()
 }
 
 func main() {
+	// Add Handeler for the ready event
 	s.AddHandler(func(s *discordgo.Session, r *discordgo.Ready) {
 		log.Printf("Logged in as: %v#%v", s.State.User.Username, s.State.User.Discriminator)
 	})
@@ -96,6 +101,7 @@ func main() {
 		log.Fatalf("Cannot open the session: %v", err)
 	}
 
+	// Register the commands globally
 	log.Println("Adding commands...")
 	registeredCommands := make([]*discordgo.ApplicationCommand, len(commands))
 	for i, v := range commands {
