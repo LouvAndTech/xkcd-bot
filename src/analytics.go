@@ -142,7 +142,7 @@ func Analytics_RemoveGuild(guild *GuildData) error {
 		}
 	}
 	//Assuming that the guild is in the database, update the removed_at field
-	_, err = db.Exec("UPDATE analytics SET removed_at = ? WHERE ID = ?", guild.RemovedAt, guild.ID)
+	_, err = db.Exec("UPDATE analytics SET removed_at = ? WHERE ID = ?", time.Now().UTC(), guild.ID)
 	if err != nil {
 		return err
 	}
