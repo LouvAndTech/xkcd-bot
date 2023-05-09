@@ -25,8 +25,8 @@ var cron *gocron.Scheduler
 
 var cfg = weaviate.Config{
 	// DEV CONFIG:
-	//Host: "localhost:8080",
-	Host:   "weaviate:8080",
+	Host: "localhost:8080",
+	//Host:   "weaviate:8080",
 	Scheme: "http",
 }
 
@@ -83,19 +83,26 @@ func init() {
 	}
 
 	// Initialize the scheduler, add the job and start it
+	log.Println("Initializing scheduler...")
 	cron = gocron.NewScheduler(time.UTC)
 	_, err = cron.Every(1).Day().At("00:00").Do(saveMissing)
 	if err != nil {
 		log.Fatal("Cannot add the job to the scheduler: ", err)
 	}
 	cron.StartAsync()
+
+	//Initialize the analytics
+	log.Println("Initializing analytics...")
+	err = InitAnalytics()
+	if err != nil {
+		log.Fatalf("Cannot initialize analytics: %v", err)
+	}
 }
 
 func main() {
-	// Add Handeler for the ready event
-	s.AddHandler(func(s *discordgo.Session, r *discordgo.Ready) {
-		log.Printf("Logged in as: %v#%v", s.State.User.Username, s.State.User.Discriminator)
-	})
+	// Add the handelers
+	Add_dsg_Handeler(s)
+
 	err := s.Open()
 	if err != nil {
 		log.Fatalf("Cannot open the session: %v", err)

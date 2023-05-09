@@ -55,6 +55,10 @@ var (
 				log.Println(err)
 				return
 			}
+			err = Analytics_UpdateCommandAPI(i.GuildID)
+			if err != nil {
+				log.Println(err)
+			}
 			s.InteractionRespond(i.Interaction, &discordgo.InteractionResponse{
 				Type: discordgo.InteractionResponseChannelMessageWithSource,
 				Data: &discordgo.InteractionResponseData{
@@ -69,6 +73,10 @@ var (
 				log.Println(err)
 				return
 			}
+			err = Analytics_UpdateCommandAPI(i.GuildID)
+			if err != nil {
+				log.Println(err)
+			}
 			s.InteractionRespond(i.Interaction, &discordgo.InteractionResponse{
 				Type: discordgo.InteractionResponseChannelMessageWithSource,
 				Data: &discordgo.InteractionResponseData{
@@ -81,6 +89,10 @@ var (
 			if err != nil {
 				log.Println(err)
 				return
+			}
+			err = Analytics_UpdateCommandAPI(i.GuildID)
+			if err != nil {
+				log.Println(err)
 			}
 			s.InteractionRespond(i.Interaction, &discordgo.InteractionResponse{
 				Type: discordgo.InteractionResponseChannelMessageWithSource,
@@ -107,6 +119,10 @@ var (
 				xkcd = XKCD{
 					Num: 0,
 				}
+			}
+			err = Analytics_UpdateCommandWeaviate(i.GuildID)
+			if err != nil {
+				log.Println(err)
 			}
 			s.InteractionRespond(i.Interaction, &discordgo.InteractionResponse{
 				Type: discordgo.InteractionResponseChannelMessageWithSource,

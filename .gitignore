@@ -1,3 +1,5 @@
 .DS_Store
 
 bot_parameter.go
+
+analytics.db
