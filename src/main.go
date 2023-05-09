@@ -25,8 +25,8 @@ var cron *gocron.Scheduler
 
 var cfg = weaviate.Config{
 	// DEV CONFIG:
-	Host: "localhost:8080",
-	//Host:   "weaviate:8080",
+	//Host: "localhost:8080",
+	Host:   "weaviate:8080",
 	Scheme: "http",
 }
 
