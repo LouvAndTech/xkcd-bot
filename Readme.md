@@ -47,3 +47,17 @@ No real answer, just think we all could use a lilte bit more of xkcd in our bori
 ---
 ## Limits / Bugs :
 *I've resolved all the limitation and bugs i've found, but if you find one feel free to open an issue*
+
+
+---
+
+## Analytics :
+The bot is collecting some data to allow me to know how many people are using it and how many server are using it.
+
+*To do that i only store the following data for each guild:*
+- *the guild id*
+- *the guild name*
+- *the date when the bot was added to the server*
+- *the number of each commands executed*
+- *the date of the last command executed*
+- *the date when the bot was removed from the server*

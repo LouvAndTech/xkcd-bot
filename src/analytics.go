@@ -8,7 +8,6 @@ package main
  * - the guild id
  * - the guild name
  * - the date when the bot was added to the server
- * - the number of members
  * - the number of each commands executed
  * - the date of the last command executed
  * - the date when the bot was removed from the server (1/1/2000 if it wasn't)
